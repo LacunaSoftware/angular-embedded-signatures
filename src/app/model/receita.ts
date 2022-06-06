@@ -1,4 +1,3 @@
-export interface Receita {
-  nomeDoPaciente: string;
-  remedio: string;
+export class Receita {
+  constructor(public nomeDoPaciente: string, public medicamento: Array<string>) {}
 }

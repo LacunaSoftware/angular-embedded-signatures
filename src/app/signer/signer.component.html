@@ -1,20 +1,58 @@
 <div class="content" role="main">
-  <h1>Welcome to the signer example!</h1>
-  <h2>Please input the data</h2>
+  <h3>Bem-vindo ao exemplo de assinatura embutida para Angular</h3>
+  <h4>Preencha o formulário abaixo</h4>
+  <hr />
 
-  <div>
-    <label for="usuario-nome">Nome do usuário: </label>
-    <input id="usuario-nome" placeholder="Nome de usuário">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 mx-auto">
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="text-md-center">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="data" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" />
+                  <label class="form-check-label" for="teste">Certificado de Teste</label>
+                </div>
+                <div class="row">
+                  <a href="https://docs.lacunasoftware.com/pt-BR/articles/pki-guide/test-certs.html" target="_blank">Como usar certificado de teste?</a>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div id="fileUploadDiv" class="row">
+              <div class="text-md-center">
+                <label for="fileSelector">Escolha um documento específico (opcional): </label>
+                <input type="file" id="fileInput" name="fileSelector" accept="application/pdf"
+                  onchange="uploadDocument()">
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr/>
+        <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="embedSignForm">
+          <div class="row justify-content-center mb-2">
+            <label for="usuario-nome" hidden>Nome do usuário: </label>
+            <input id="usuario-nome" class="form-control form-rounded" placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
+            formControlName="nome">
+          </div>
+          <div class="row justify-content-center mb-2">
+            <label for="email-input" hidden>Email: </label>
+            <input class="form-control form-rounded" id="email-input" placeholder="E-mail (ex: {{usuarioPlaceholder.email}})"
+              formControlName="email">
+          </div>
+          <div class="row justify-content-center mb-2">
+            <label for="cpf-input" hidden>CPF: </label>
+            <input class="form-control form-rounded" id="cpf-input" placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})"
+              formControlName="cpf">
+          </div>
+        </form>
+        <div class="row">
+          <div class="text-md-center mt-1">
+            <button type="button" class="form-control btn btn-primary btn-clr" (click)="updateProfile()">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="email-input">Email: </label>
-    <input id="email-input" placeholder="Email">
-  </div>
-  <div>
-    <label for="cpf-input">CPF: </label>
-    <input id="cpf-input" placeholder="CPF">
-  </div>
-
-
-
 </div>
