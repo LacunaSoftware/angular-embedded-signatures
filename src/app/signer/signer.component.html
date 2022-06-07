@@ -3,7 +3,7 @@
   <h4>Preencha o formulário abaixo</h4>
   <hr />
 
-  <div class="container">
+  <div id="formContainer" *ngIf="!disableForms" class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 mx-auto">
         <form>
@@ -11,11 +11,13 @@
             <div class="row">
               <div class="text-md-center">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="data" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" />
+                  <input class="form-check-input" type="checkbox" id="data" [(ngModel)]="isChecked"
+                    [ngModelOptions]="{standalone: true}" />
                   <label class="form-check-label" for="teste">Certificado de Teste</label>
                 </div>
                 <div class="row">
-                  <a href="https://docs.lacunasoftware.com/pt-BR/articles/pki-guide/test-certs.html" target="_blank">Como usar certificado de teste?</a>
+                  <a href="https://docs.lacunasoftware.com/pt-BR/articles/pki-guide/test-certs.html"
+                    target="_blank">Como usar certificado de teste?</a>
                 </div>
               </div>
             </div>
@@ -24,27 +26,27 @@
               <div class="text-md-center">
                 <label for="fileSelector">Escolha um documento específico (opcional): </label>
                 <input type="file" id="fileInput" name="fileSelector" accept="application/pdf"
-                  onchange="uploadDocument()">
+                  (change)="onFileSelected($event)">
               </div>
             </div>
           </div>
         </form>
-        <hr/>
-        <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="embedSignForm">
+        <hr />
+        <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="embedSignForm" >
           <div class="row justify-content-center mb-2">
             <label for="usuario-nome" hidden>Nome do usuário: </label>
-            <input id="usuario-nome" class="form-control form-rounded" placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
-            formControlName="nome">
+            <input id="usuario-nome" class="form-control form-rounded"
+              placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" formControlName="nome" [(ngModel)]="usuario.nome">
           </div>
           <div class="row justify-content-center mb-2">
             <label for="email-input" hidden>Email: </label>
-            <input class="form-control form-rounded" id="email-input" placeholder="E-mail (ex: {{usuarioPlaceholder.email}})"
-              formControlName="email">
+            <input class="form-control form-rounded" id="email-input"
+              placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" formControlName="email" [(ngModel)]="usuario.email">
           </div>
           <div class="row justify-content-center mb-2">
             <label for="cpf-input" hidden>CPF: </label>
-            <input class="form-control form-rounded" id="cpf-input" placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})"
-              formControlName="cpf">
+            <input class="form-control form-rounded" id="cpf-input"
+              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" [(ngModel)]="usuario.cpf">
           </div>
         </form>
         <div class="row">
@@ -52,6 +54,14 @@
             <button type="button" class="form-control btn btn-primary btn-clr" (click)="updateProfile()">Login</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=row-cols-auto id="whiteboard" hidden>
+    <div class="card">
+      <div class="card-body">
+        <div id="embed-container" class="frame-container"></div>
       </div>
     </div>
   </div>
