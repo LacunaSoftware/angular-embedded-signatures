@@ -44,3 +44,4 @@ Thumbs.db
 /.angular/cache/13.3.7
 /.vscode/launch.json
 /.vscode/extensions.json
+package-lock.json
