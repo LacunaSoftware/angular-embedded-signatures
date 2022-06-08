@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
@@ -12,7 +13,7 @@ import { Usuario } from '../model/usuario';
 })
 export class SignerComponent implements OnInit {
 
-  @Input() usuarioPlaceholder: Usuario = {
+  usuarioPlaceholder: Usuario = {
     cpf: "47363361886",
     email: "teste@lacunasoftware.com",
     nome: "Pierre de Fermat"
@@ -24,7 +25,13 @@ export class SignerComponent implements OnInit {
   isChecked: Boolean = false
   disableForms: Boolean = false
 
-  receita = new Receita("Fulano de tal", ['Ibuprofeno', 'Rivotril', 'Omeprazol', 'Benegrip'])
+  receitaPlaceholder = new Receita("Fulano de tal");
+  receita = new Receita("", {
+    'Ibuprofeno': 'Ibuprofeno',
+    'Rivotril': 'Rivotril',
+    'Omeprazol': 'Omeprazol',
+    'Benegrip': 'Benegrip'
+  });
   usuario = new Usuario("", "", "");
 
   embedSignForm = new UntypedFormGroup({
@@ -37,6 +44,7 @@ export class SignerComponent implements OnInit {
     console.log("Nome: ", this.usuario.nome);
     console.log("email: ", this.usuario.email)
     console.log("cpf: ", this.usuario.cpf);
+    this.disableForms = true;
   }
 
   updateCertificadoDeTeste() {
@@ -47,27 +55,28 @@ export class SignerComponent implements OnInit {
 
     if (file) {
       const headers: HttpHeaders = new HttpHeaders({
-          'Content-Type': 'undefined',
-          'x-api-key': 'API Sample App|43fc0da834e48b4b840fd6e8c37196cf29f919e5daedba0f1a5ec17406c13a99'
+        'Content-Type': 'undefined',
+        'x-api-key': 'API Sample App|43fc0da834e48b4b840fd6e8c37196cf29f919e5daedba0f1a5ec17406c13a99'
       });
       this.fileName = file.name;
       const formData = new FormData();
       formData.append("file", file);
-      const upload$ = this.http.post("https://dropsigner.com/api/uploads", formData, {headers: headers});
+      const upload$ = this.http.post("https://signer-lac.azurewebsites.net/api/uploads", formData, { headers: headers });
       upload$.subscribe();
     }
   }
 
-  renderWidget(){
+  renderWidget() {
     this.disableForms = true;
     var widget = new LacunaSignerWidget();
     widget.render("", 'embed-container')
   }
 
   constructor(private http: HttpClient) {
-   }
+  }
 
   ngOnInit(): void {
+
   }
 
 

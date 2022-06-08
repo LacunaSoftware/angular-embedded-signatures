@@ -3,7 +3,7 @@
   <h4>Preencha o formulário abaixo</h4>
   <hr />
 
-  <div id="formContainer" *ngIf="!disableForms" class="container">
+  <div id="userFormContainer" *ngIf="!disableForms" class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 mx-auto">
         <form>
@@ -32,37 +32,63 @@
           </div>
         </form>
         <hr />
-        <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="embedSignForm" >
+        <form *ngIf="usuarioPlaceholder && !isChecked" (ngSubmit)="updateProfile()">
           <div class="row justify-content-center mb-2">
             <label for="usuario-nome" hidden>Nome do usuário: </label>
             <input id="usuario-nome" class="form-control form-rounded"
-              placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" formControlName="nome" [(ngModel)]="usuario.nome">
+              placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" [(ngModel)]="usuario.nome"
+              [ngModelOptions]="{standalone: true}">
           </div>
           <div class="row justify-content-center mb-2">
             <label for="email-input" hidden>Email: </label>
             <input class="form-control form-rounded" id="email-input"
-              placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" formControlName="email" [(ngModel)]="usuario.email">
+              placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" [(ngModel)]="usuario.email"
+              [ngModelOptions]="{standalone: true}">
           </div>
           <div class="row justify-content-center mb-2">
             <label for="cpf-input" hidden>CPF: </label>
             <input class="form-control form-rounded" id="cpf-input"
-              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" [(ngModel)]="usuario.cpf">
+              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" [(ngModel)]="usuario.cpf"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="row">
+            <div class="text-md-center mt-1 mb-2">
+              <button type="submit" class="form-control btn btn-primary btn-clr">Login</button>
+            </div>
           </div>
         </form>
-        <div class="row">
-          <div class="text-md-center mt-1">
-            <button type="button" class="form-control btn btn-primary btn-clr" (click)="updateProfile()">Login</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
-  <div class=row-cols-auto id="whiteboard" hidden>
-    <div class="card">
-      <div class="card-body">
-        <div id="embed-container" class="frame-container"></div>
+  <div id="prescriptionFormContainer" *ngIf="disableForms"  class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 mx-auto form-group">
+        <form>
+          <div class="row justify-content-center mb-2">
+            <label for="nome-paciente" hidden>Email: </label>
+            <input class="form-control form-rounded" id="nome-paciente"
+              placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})" [(ngModel)]="receita.nomeDoPaciente"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="row justify-content-center mb-2">
+            <label for="nome-medicamento" hidden>CPF: </label>
+            <select class="form-select" id="nome-medicamento" required >
+              <option [ngValue]="null" disabled selected>Medicamento</option>
+              <option *ngFor="let medicamento of receita.medicamento | keyvalue"
+              [value]="medicamento.value">{{medicamento.key}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+    <div class=row-cols-auto id="whiteboard" hidden>
+      <div class="card">
+        <div class="card-body">
+          <div id="embed-container" class="frame-container"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
