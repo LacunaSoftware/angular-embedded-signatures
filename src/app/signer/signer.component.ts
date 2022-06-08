@@ -2,7 +2,8 @@ import { KeyValue } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import LacunaSignerWidget from 'lacuna-signer-widget';
+import { LacunaSignerWidget } from 'lacuna-signer-widget';
+import { map } from 'rxjs';
 import { Receita } from '../model/receita';
 import { Usuario } from '../model/usuario';
 
@@ -24,6 +25,7 @@ export class SignerComponent implements OnInit {
 
   isChecked: Boolean = false
   disableForms: Boolean = false
+  disableAllForms: Boolean = false
 
   receitaPlaceholder = new Receita("Fulano de tal");
   receita = new Receita("", {
@@ -66,10 +68,18 @@ export class SignerComponent implements OnInit {
     }
   }
 
-  renderWidget() {
-    this.disableForms = true;
+  renderWidget(data: string) {
     var widget = new LacunaSignerWidget();
-    widget.render("", 'embed-container')
+    this.disableAllForms = true;
+    widget.render(data, 'embed-container')
+  }
+
+  startSignature() {
+    this.http.post("https://demos.lacunasoftware.com/api/signer/embedded", {}, {observe: 'response'} ).subscribe(response => {
+      response.headers.keys(); // all header names
+      response.body // response content
+      console.log(response.body);
+    });
   }
 
   constructor(private http: HttpClient) {

@@ -3,7 +3,7 @@
   <h4>Preencha o formulário abaixo</h4>
   <hr />
 
-  <div id="userFormContainer" *ngIf="!disableForms" class="container">
+  <div id="userFormContainer" *ngIf="!disableForms && !disableAllForms" class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 mx-auto">
         <form>
@@ -61,34 +61,47 @@
     </div>
   </div>
 
-  <div id="prescriptionFormContainer" *ngIf="disableForms"  class="container">
+  <div id="prescriptionFormContainer" *ngIf="disableForms && !disableAllForms" class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 mx-auto form-group">
-        <form>
+        <form (ngSubmit)="startSignature()">
           <div class="row justify-content-center mb-2">
             <label for="nome-paciente" hidden>Email: </label>
-            <input class="form-control form-rounded" id="nome-paciente"
-              placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})" [(ngModel)]="receita.nomeDoPaciente"
-              [ngModelOptions]="{standalone: true}">
+            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente"
+              #nomePaciente="ngModel" required
+              placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})"
+              [(ngModel)]="receita.nomeDoPaciente" [ngModelOptions]="{standalone: true}">
+            <div *ngIf="nomePaciente.invalid && !nomePaciente.pristine">
+              Nome de paciente é obrigatório, digite novamente
+            </div>
           </div>
           <div class="row justify-content-center mb-2">
             <label for="nome-medicamento" hidden>CPF: </label>
-            <select class="form-select" id="nome-medicamento" required >
+            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption" #medicamentoOption required>
               <option [ngValue]="null" disabled selected>Medicamento</option>
-              <option *ngFor="let medicamento of receita.medicamento | keyvalue"
-              [value]="medicamento.value">{{medicamento.key}}</option>
+              <option *ngFor="let medicamento of receita.medicamento | keyvalue" [value]="medicamento.value" >
+                {{medicamento.key}}</option>
             </select>
+            <div *ngIf="!medicamentoOption.oninvalid">
+              Nome de paciente é obrigatório, digite novamente
+            </div>
+          </div>
+          <div class="row">
+            <div class="text-md-center mt-1 mb-2">
+              <button type="submit" class="form-control btn btn-primary btn-clr">COMEÇAR</button>
+            </div>
           </div>
         </form>
       </div>
     </div>
-</div>
+  </div>
 
-    <div class=row-cols-auto id="whiteboard" hidden>
-      <div class="card">
-        <div class="card-body">
-          <div id="embed-container" class="frame-container"></div>
-        </div>
+
+  <div class=row-cols-auto id="whiteboard" hidden>
+    <div class="card">
+      <div class="card-body">
+        <div id="embed-container" class="frame-container"></div>
       </div>
     </div>
   </div>
+</div>
