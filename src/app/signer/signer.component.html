@@ -35,10 +35,11 @@
         <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="loginForm">
           <div class="row justify-content-center mb-2 form-group">
             <label for="nome" hidden>Nome do usuário: </label>
-            <input id="nome" class="form-control form-rounded" placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
+            <input id="nome" class="form-control form-rounded"
+            placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
             formControlName="nome" required>
-            <div *ngIf="nome?.invalid && !nome?.untouched">
-              O nome é obrigatório, preencha antes de continuar
+            <div *ngIf="nome?.invalid && nome?.dirty">
+              Preencha um nome válido antes de continuar
             </div>
           </div>
           <div class="row justify-content-center mb-2">
@@ -46,7 +47,7 @@
             <input class="form-control form-rounded" id="email-input"
             placeholder="E-mail (ex: {{usuarioPlaceholder.email}})"
             formControlName="email" required minlength="3">
-            <div *ngIf="email?.invalid && !email?.untouched">
+            <div *ngIf="email?.invalid && email?.dirty">
               Preencha o campo de e-mail com um e-mail válido
             </div>
           </div>
@@ -54,7 +55,7 @@
             <label for="cpf-input" hidden>CPF: </label>
             <input class="form-control form-rounded" id="cpf-input" name="cpf"
               placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" required>
-            <div *ngIf="cpf?.invalid && !cpf?.untouched">
+            <div *ngIf="cpf?.invalid && cpf?.dirty">
               O CPF é obrigatório, digite novamente
             </div>
           </div>
@@ -72,31 +73,31 @@
   <div id="prescriptionFormContainer" *ngIf="disableForms && !disableAllForms" class="container">
     <div class="row justify-content-center">
       <div class="col-lg-4 mx-auto form-group">
-        <form (ngSubmit)="startSignature()">
+        <form [formGroup]="prescricaoForm" (ngSubmit)="startSignature()">
           <div class="row justify-content-center mb-2">
             <label for="nome-paciente" hidden>Email: </label>
-            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente" #nomePaciente="ngModel"
-              required placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})"
-              [(ngModel)]="receita.nomeDoPaciente" [ngModelOptions]="{standalone: true}">
-            <div *ngIf="nomePaciente.invalid && !nomePaciente.pristine">
+            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente"
+              formControlName="nomePaciente"
+              required placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})">
+            <div *ngIf="nomePaciente?.invalid && nomePaciente?.dirty">
               Nome de paciente é obrigatório, digite novamente
             </div>
           </div>
           <div class="row justify-content-center mb-2">
             <label for="nome-medicamento" hidden>CPF: </label>
-            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption" #medicamentoOption
-              required>
+            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption"
+              formControlName="medicamento" required>
               <option [ngValue]="null" disabled selected>Medicamento</option>
               <option *ngFor="let medicamento of receita.medicamento | keyvalue" [value]="medicamento.value">
                 {{medicamento.key}}</option>
             </select>
-            <div *ngIf="!medicamentoOption.oninvalid">
+            <div *ngIf="medicamento?.invalid && medicamento?.dirty">
               Selecione um medicamento e tente novamente
             </div>
           </div>
           <div class="row">
             <div class="text-md-center mt-1 mb-2">
-              <button type="submit" class="form-control btn btn-primary btn-clr">COMEÇAR</button>
+              <button type="submit" class="form-control btn btn-primary btn-clr" [disabled]="prescricaoForm.invalid">COMEÇAR</button>
             </div>
           </div>
         </form>

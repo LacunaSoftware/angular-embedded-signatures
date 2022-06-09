@@ -13,6 +13,16 @@ import { Usuario } from '../model/usuario';
 })
 export class SignerComponent implements OnInit {
 
+  loginForm! : FormGroup;
+  get nome() { return this.loginForm.get('nome'); }
+  get email() { return this.loginForm.get('email'); }
+  get cpf() { return this.loginForm.get('cpf'); }
+
+  prescricaoForm! : FormGroup;
+  get nomePaciente() { return this.loginForm.get('nomePaciente'); }
+  get medicamento() { return this.loginForm.get('email'); }
+
+
   usuarioPlaceholder: Usuario = {
     cpf: "47363361886",
     email: "teste@lacunasoftware.com",
@@ -37,13 +47,17 @@ export class SignerComponent implements OnInit {
   usuario = new Usuario("", "", "");
 
   updateProfile() {
-
-    if(!this.isChecked){
-      console.log("Nome: ", this.usuario.nome);
-      console.log("email: ", this.usuario.email)
-      console.log("cpf: ", this.usuario.cpf);
       this.disableForms = true;
-    }
+      if(this.isChecked) {
+        this.usuario.nome = this.usuarioPlaceholder.nome;
+        this.usuario.cpf = this.usuarioPlaceholder.cpf;
+        this.usuario.email = this.usuarioPlaceholder.email;
+      }
+      // DEBUG
+      console.log("Nome:", this.usuario.nome)
+      console.log("Email:", this.usuario.email)
+      console.log("CPF:", this.usuario.cpf)
+
   }
 
   updateCertificadoDeTeste() {
@@ -72,7 +86,7 @@ export class SignerComponent implements OnInit {
   }
 
   startSignature() {
-    this.http.post("https://demos.lacunasoftware.com/api/signer/embedded", {}, {observe: 'response'} ).subscribe(response => {
+    this.http.post("https://demos.lacunasoftware.com/api/signer/embedded/", {}, {observe: 'response'} ).subscribe(response => {
       response.headers.keys(); // all header names
       response.body // response content
       console.log(response.body);
@@ -95,14 +109,18 @@ export class SignerComponent implements OnInit {
       cpf: new FormControl(this.usuario.cpf, Validators.compose([
         Validators.required,
         Usuario.ValidaCpf
-      ])
-      )
+      ]))
+    });
+
+    this.prescricaoForm = new FormGroup({
+      nomePaciente: new FormControl(this.usuario.nome, [
+        Validators.required
+      ]),
+      medicamento: new FormControl(this.usuario.email, [
+        Validators.required
+      ]),
     });
   }
 
-  loginForm! : FormGroup;
-  get nome() { return this.loginForm.get('name'); }
-  get email() { return this.loginForm.get('email'); }
-  get cpf() { return this.loginForm.get('cpf'); }
 
 }
