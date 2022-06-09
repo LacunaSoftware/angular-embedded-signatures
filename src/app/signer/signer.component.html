@@ -32,31 +32,39 @@
           </div>
         </form>
         <hr />
-        <form *ngIf="usuarioPlaceholder && !isChecked" (ngSubmit)="updateProfile()">
-          <div class="row justify-content-center mb-2">
-            <label for="usuario-nome" hidden>Nome do usuário: </label>
-            <input id="usuario-nome" class="form-control form-rounded"
-              placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" [(ngModel)]="usuario.nome"
-              [ngModelOptions]="{standalone: true}">
+        <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="loginForm">
+          <div class="row justify-content-center mb-2 form-group">
+            <label for="nome" hidden>Nome do usuário: </label>
+            <input id="nome" class="form-control form-rounded" placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
+            formControlName="nome" required>
+            <div *ngIf="nome?.invalid && !nome?.untouched">
+              O nome é obrigatório, preencha antes de continuar
+            </div>
           </div>
           <div class="row justify-content-center mb-2">
             <label for="email-input" hidden>Email: </label>
             <input class="form-control form-rounded" id="email-input"
-              placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" [(ngModel)]="usuario.email"
-              [ngModelOptions]="{standalone: true}">
+            placeholder="E-mail (ex: {{usuarioPlaceholder.email}})"
+            formControlName="email" required minlength="3">
+            <div *ngIf="email?.invalid && !email?.untouched">
+              Preencha o campo de e-mail com um e-mail válido
+            </div>
           </div>
           <div class="row justify-content-center mb-2">
             <label for="cpf-input" hidden>CPF: </label>
-            <input class="form-control form-rounded" id="cpf-input"
-              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" [(ngModel)]="usuario.cpf"
-              [ngModelOptions]="{standalone: true}">
-          </div>
-          <div class="row">
-            <div class="text-md-center mt-1 mb-2">
-              <button type="submit" class="form-control btn btn-primary btn-clr">Login</button>
+            <input class="form-control form-rounded" id="cpf-input" name="cpf"
+              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" required>
+            <div *ngIf="cpf?.invalid && !cpf?.untouched">
+              O CPF é obrigatório, digite novamente
             </div>
           </div>
         </form>
+        <div class="row">
+          <div class="text-md-center mt-1 mb-2">
+            <button type="submit" class="form-control btn btn-primary btn-clr" [disabled]="!loginForm.valid && !isChecked" (click)="updateProfile()">Login</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -67,9 +75,8 @@
         <form (ngSubmit)="startSignature()">
           <div class="row justify-content-center mb-2">
             <label for="nome-paciente" hidden>Email: </label>
-            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente"
-              #nomePaciente="ngModel" required
-              placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})"
+            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente" #nomePaciente="ngModel"
+              required placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})"
               [(ngModel)]="receita.nomeDoPaciente" [ngModelOptions]="{standalone: true}">
             <div *ngIf="nomePaciente.invalid && !nomePaciente.pristine">
               Nome de paciente é obrigatório, digite novamente
@@ -77,13 +84,14 @@
           </div>
           <div class="row justify-content-center mb-2">
             <label for="nome-medicamento" hidden>CPF: </label>
-            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption" #medicamentoOption required>
+            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption" #medicamentoOption
+              required>
               <option [ngValue]="null" disabled selected>Medicamento</option>
-              <option *ngFor="let medicamento of receita.medicamento | keyvalue" [value]="medicamento.value" >
+              <option *ngFor="let medicamento of receita.medicamento | keyvalue" [value]="medicamento.value">
                 {{medicamento.key}}</option>
             </select>
             <div *ngIf="!medicamentoOption.oninvalid">
-              Nome de paciente é obrigatório, digite novamente
+              Selecione um medicamento e tente novamente
             </div>
           </div>
           <div class="row">

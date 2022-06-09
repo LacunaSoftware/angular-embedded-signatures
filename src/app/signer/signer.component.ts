@@ -1,9 +1,8 @@
 import { KeyValue } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { LacunaSignerWidget } from 'lacuna-signer-widget';
-import { map } from 'rxjs';
 import { Receita } from '../model/receita';
 import { Usuario } from '../model/usuario';
 
@@ -22,31 +21,29 @@ export class SignerComponent implements OnInit {
 
   fileName = '';
 
-
   isChecked: Boolean = false
   disableForms: Boolean = false
   disableAllForms: Boolean = false
 
   receitaPlaceholder = new Receita("Fulano de tal");
+
   receita = new Receita("", {
     'Ibuprofeno': 'Ibuprofeno',
     'Rivotril': 'Rivotril',
     'Omeprazol': 'Omeprazol',
     'Benegrip': 'Benegrip'
   });
+
   usuario = new Usuario("", "", "");
 
-  embedSignForm = new UntypedFormGroup({
-    cpf: new UntypedFormControl(''),
-    email: new UntypedFormControl(''),
-    nome: new UntypedFormControl('')
-  });
-
   updateProfile() {
-    console.log("Nome: ", this.usuario.nome);
-    console.log("email: ", this.usuario.email)
-    console.log("cpf: ", this.usuario.cpf);
-    this.disableForms = true;
+
+    if(!this.isChecked){
+      console.log("Nome: ", this.usuario.nome);
+      console.log("email: ", this.usuario.email)
+      console.log("cpf: ", this.usuario.cpf);
+      this.disableForms = true;
+    }
   }
 
   updateCertificadoDeTeste() {
@@ -86,9 +83,26 @@ export class SignerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loginForm = new FormGroup({
+      nome: new FormControl(this.usuario.nome, [
+        Validators.required
+      ]),
+      email: new FormControl(this.usuario.email, [
+        Validators.email,
+        Validators.required,
+        Validators.minLength(3)
+      ]),
+      cpf: new FormControl(this.usuario.cpf, Validators.compose([
+        Validators.required,
+        Usuario.ValidaCpf
+      ])
+      )
+    });
   }
 
-
+  loginForm! : FormGroup;
+  get nome() { return this.loginForm.get('name'); }
+  get email() { return this.loginForm.get('email'); }
+  get cpf() { return this.loginForm.get('cpf'); }
 
 }
