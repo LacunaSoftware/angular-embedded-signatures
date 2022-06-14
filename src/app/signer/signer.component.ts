@@ -12,6 +12,12 @@ import { Usuario } from '../model/usuario';
   styleUrls: ['./signer.component.css']
 })
 export class SignerComponent implements OnInit {
+  public get http(): HttpClient {
+    return this._http;
+  }
+  public set http(value: HttpClient) {
+    this._http = value;
+  }
 
   loginForm! : FormGroup;
   get nome() { return this.loginForm.get('nome'); }
@@ -79,21 +85,32 @@ export class SignerComponent implements OnInit {
     }
   }
 
-  renderWidget(data: string) {
+  sign(data: string) {
     var widget = new LacunaSignerWidget();
     this.disableAllForms = true;
-    widget.render(data, 'embed-container')
+    if(data){
+
+      widget.render(data, 'embed-container')
+    }
   }
 
   startSignature() {
-    this.http.post("https://demos.lacunasoftware.com/api/signer/embedded/", {}, {observe: 'response'} ).subscribe(response => {
-      response.headers.keys(); // all header names
-      response.body // response content
-      console.log(response.body);
+    const headers: HttpHeaders = new HttpHeaders({
+      'x-api-key': 'demo-portal|bebe3de56c5c2c40a6022978a6706e55fb8b9817c577138e1200fae757cc7a64',
     });
+    this._http.post("https://localhost:5001/api/signer/embedded", null, {
+      observe: 'response',
+      headers: headers,
+      responseType: 'text'})
+      .subscribe((response: { body: any; }) => {
+      console.log(response.body);
+      this.sign(response.body)
+    });
+
+
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   ngOnInit(): void {
