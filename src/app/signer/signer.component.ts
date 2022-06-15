@@ -1,10 +1,11 @@
-import { KeyValue } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, Validators } from '@angular/forms';
 import { LacunaSignerWidget } from 'lacuna-signer-widget';
 import { Receita } from '../model/receita';
 import { Usuario } from '../model/usuario';
+
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-signer',
@@ -129,10 +130,15 @@ export class SignerComponent implements OnInit {
     window.location.reload();
   }
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      console.log(params['name']);
+    });
+
     this.loginForm = new FormGroup({
       nome: new FormControl(this.usuario.nome, [
         Validators.required

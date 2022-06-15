@@ -6,20 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CpfPipe } from './cpf.pipe';
 import { SignerComponent } from './signer/signer.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignerComponent,
-    CpfPipe
-  ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
+  declarations: [
+    AppComponent,
+    SignerComponent,
+    CpfPipe
+  ],
+  exports: [],
   providers: [],
-  bootstrap: [SignerComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
