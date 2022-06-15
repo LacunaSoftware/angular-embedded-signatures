@@ -1,6 +1,6 @@
 <div class="content" role="main">
-  <h3>Bem-vindo ao exemplo de assinatura embutida para Angular</h3>
-  <h4>Preencha o formulário abaixo</h4>
+  <h1>Criação de prescrição</h1>
+  <h2>Informe os dados do certificado:</h2>
   <hr />
 
   <div id="userFormContainer" *ngIf="!disableForms && !disableAllForms" class="container">
@@ -34,7 +34,7 @@
         <form *ngIf="usuarioPlaceholder && !isChecked" [formGroup]="loginForm">
           <div class="row justify-content-center mb-2 form-group">
             <label for="nome" hidden>Nome do usuário: </label>
-            <input id="nome" class="form-control form-rounded"
+            <input id="nome" class="form-control form-rounded transparent-input"
               placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" formControlName="nome" required>
             <div *ngIf="nome?.invalid && nome?.dirty">
               Preencha um nome válido antes de continuar
@@ -42,7 +42,7 @@
           </div>
           <div class="row justify-content-center mb-2">
             <label for="email-input" hidden>Email: </label>
-            <input class="form-control form-rounded" id="email-input"
+            <input class="form-control form-rounded transparent-input" id="email-input"
               placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" formControlName="email" required minlength="3">
             <div *ngIf="email?.invalid && email?.dirty">
               Preencha o campo de e-mail com um e-mail válido
@@ -50,7 +50,7 @@
           </div>
           <div class="row justify-content-center mb-2">
             <label for="cpf-input" hidden>CPF: </label>
-            <input class="form-control form-rounded" id="cpf-input" name="cpf"
+            <input class="form-control form-rounded transparent-input" id="cpf-input" name="cpf"
               placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" required>
             <div *ngIf="cpf?.invalid && cpf?.dirty">
               O CPF é obrigatório, digite novamente
@@ -74,7 +74,7 @@
         <form [formGroup]="prescricaoForm" (ngSubmit)="startSignature()">
           <div class="row justify-content-center mb-2">
             <label for="nome-paciente" hidden>Email: </label>
-            <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente"
+            <input class="form-control form-rounded transparent-input" id="nome-paciente" name="nomePaciente"
               formControlName="nomePaciente" required
               placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})">
             <div *ngIf="nomePaciente?.invalid && nomePaciente?.dirty">
@@ -83,7 +83,7 @@
           </div>
           <div class="row justify-content-center mb-2">
             <label for="nome-medicamento" hidden>CPF: </label>
-            <select class="form-select text-md-center" id="nome-medicamento" name="medicamentoOption"
+            <select class="form-select text-md-center transparent-input" id="nome-medicamento" name="medicamentoOption"
               formControlName="medicamento" required>
               <option [ngValue]="null" disabled selected>Medicamento</option>
               <option *ngFor="let medicamento of receita.medicamento | keyvalue" [value]="medicamento.value">
@@ -138,9 +138,9 @@
               <h4> Sua prescrição foi criada com sucesso!</h4>
             </div>
             <div class="btn-group col-lg-8">
-              <button class="btn btn-primary rounded m-2" placeholder="Começar" onclick="download()"
+              <button hidden class="btn btn-primary rounded m-2" placeholder="Começar" onclick="download()"
                 type="button">BAIXAR PRESCRIÇÃO</button>
-              <a class="btn btn-outline-primary rounded btn-custom-outline m-2" role="button" >NOVA PRESCRIÇÃO</a>
+              <a class="btn btn-outline-primary rounded btn-custom-outline m-2" routerLink="/home" role="button" onclick="refreshPage()" >NOVA PRESCRIÇÃO</a>
             </div>
           </div>
         </div>

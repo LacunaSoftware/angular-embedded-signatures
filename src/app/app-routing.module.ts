@@ -4,6 +4,7 @@ import { SignerComponent } from './signer/signer.component';
 
 const routes: Routes = [
   { path: '', component: SignerComponent},
+  { path: 'home', redirectTo: '', component: SignerComponent}
 ];
 
 @NgModule({
@@ -11,7 +12,10 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes,
-      { enableTracing: true } // <-- debugging purposes only
+      {
+        enableTracing: true, // <-- debugging purposes only
+        onSameUrlNavigation: 'reload' // <-- enables refreshing
+      }
     )
   ],
   exports: [ RouterModule ]

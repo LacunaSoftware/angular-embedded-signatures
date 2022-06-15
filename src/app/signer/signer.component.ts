@@ -127,11 +127,15 @@ export class SignerComponent implements OnInit {
   }
 
   refreshPage(){
-    window.location.reload();
+    this.router.navigateByUrl('');
   }
 
   constructor(private _http: HttpClient,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => {
+        return false;
+      };
   }
 
   ngOnInit(): void {
