@@ -19,12 +19,12 @@ export class SignerComponent implements OnInit {
     this._http = value;
   }
 
-  loginForm! : FormGroup;
+  loginForm!: FormGroup;
   get nome() { return this.loginForm.get('nome'); }
   get email() { return this.loginForm.get('email'); }
   get cpf() { return this.loginForm.get('cpf'); }
 
-  prescricaoForm! : FormGroup;
+  prescricaoForm!: FormGroup;
   get nomePaciente() { return this.loginForm.get('nomePaciente'); }
   get medicamento() { return this.loginForm.get('email'); }
 
@@ -42,6 +42,7 @@ export class SignerComponent implements OnInit {
   disableAllForms: boolean = false
 
   disableDocumentPreview: boolean = true
+  afterSigned: boolean = false
 
   receitaPlaceholder = new Receita("Fulano de tal");
 
@@ -55,16 +56,16 @@ export class SignerComponent implements OnInit {
   usuario = new Usuario("", "", "");
 
   updateProfile() {
-      this.disableForms = true;
-      if(this.isChecked) {
-        this.usuario.nome = this.usuarioPlaceholder.nome;
-        this.usuario.cpf = this.usuarioPlaceholder.cpf;
-        this.usuario.email = this.usuarioPlaceholder.email;
-      }
-      // DEBUG
-      // console.log("Nome:", this.usuario.nome)
-      // console.log("Email:", this.usuario.email)
-      // console.log("CPF:", this.usuario.cpf)
+    this.disableForms = true;
+    if (this.isChecked) {
+      this.usuario.nome = this.usuarioPlaceholder.nome;
+      this.usuario.cpf = this.usuarioPlaceholder.cpf;
+      this.usuario.email = this.usuarioPlaceholder.email;
+    }
+    // DEBUG
+    // console.log("Nome:", this.usuario.nome)
+    // console.log("Email:", this.usuario.email)
+    // console.log("CPF:", this.usuario.cpf)
 
   }
 
@@ -93,8 +94,16 @@ export class SignerComponent implements OnInit {
     this.disableAllForms = true;
     var widget = new LacunaSignerWidget();
     widget.setDisableDocumentPreview(this.disableDocumentPreview);
-    if(data) {
+    if (data) {
       widget.render(data, 'embed-container')
+      widget.on(widget.events.documentSigned, () => {
+        this.afterSigned = true;
+        // Removes the widget
+        // $('#embed-container').remove();
+        // Container after signature
+        // $('#afterSigned').show();
+        // $('#whiteboard').hide();
+      });
     }
   }
 
@@ -105,14 +114,19 @@ export class SignerComponent implements OnInit {
     this._http.post("https://localhost:5001/api/signer/embedded", null, {
       observe: 'response',
       headers: headers,
-      responseType: 'text'})
+      responseType: 'text'
+    })
       .subscribe((response: { body: any; }) => {
         // DEBUG
         // console.log(response.body);
         this.sign(response.body)
-    });
+      });
 
 
+  }
+
+  refreshPage(){
+    window.location.reload();
   }
 
   constructor(private _http: HttpClient) {

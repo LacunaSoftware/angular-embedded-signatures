@@ -115,7 +115,7 @@
   </div>
 
 
-  <div class="row" id="whiteboard" [hidden]="!disableAllForms">
+  <div class="row" id="whiteboard" [hidden]="!disableAllForms || afterSigned">
     <div class="card" [ngClass]="disableDocumentPreview ? 'no-document' : 'document'">
       <div class="card-body">
         <div id="embed-container" class="frame-container"
@@ -123,4 +123,29 @@
       </div>
     </div>
   </div>
+
+  <div class="row-cols-auto" [hidden]="!afterSigned">
+    <div class="col-sm-12">
+      <div class="row justify-content-center" id="afterSigned">
+        <div class="container col-lg-6 p-3 my-3 border rounded-3 bg-white">
+          <div class="row justify-content-center">
+            <div class="row justify-content-center p-5">
+              <div class="col-md-auto">
+                <img src="assets/Group 159ok.png" />
+              </div>
+            </div>
+            <div class="col-auto">
+              <h4> Sua prescrição foi criada com sucesso!</h4>
+            </div>
+            <div class="btn-group col-lg-8">
+              <button class="btn btn-primary rounded m-2" placeholder="Começar" onclick="download()"
+                type="button">BAIXAR PRESCRIÇÃO</button>
+              <a class="btn btn-outline-primary rounded btn-custom-outline m-2" role="button" >NOVA PRESCRIÇÃO</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
