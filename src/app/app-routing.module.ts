@@ -13,7 +13,8 @@ const routes: Routes = [
     RouterModule.forRoot(
       routes,
       {
-        enableTracing: true, // <-- debugging purposes only
+        // DEBUG
+        // enableTracing: true, // <-- debugging purposes only
         onSameUrlNavigation: 'reload' // <-- enables refreshing
       }
     )
