@@ -21,8 +21,7 @@
                 </div>
               </div>
             </div>
-            <hr />
-            <div id="fileUploadDiv" class="row">
+            <div id="fileUploadDiv" class="row" hidden>
               <div class="text-md-center">
                 <label for="fileSelector">Escolha um documento específico (opcional): </label>
                 <input type="file" id="fileInput" name="fileSelector" accept="application/pdf"
@@ -106,7 +105,7 @@
   </div>
 
 
-  <div class="row-cols-auto" id="whiteboard" [hidden]="!disableAllForms">
+  <div class="row mx-auto" id="whiteboard" [hidden]="!disableAllForms">
     <div class="card">
       <div class="card-body">
         <div id="embed-container" class="frame-container"></div>
