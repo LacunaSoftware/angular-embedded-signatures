@@ -58,7 +58,7 @@ svg.material-icons:not(:last-child) {
   border: 25px solid #eee;
   background-color: #fafafa;
   height: 500px;
-  width: 1000px;
+  width: 700px;
   margin: 0 8px 16px;
   padding: 16px;
   display: flex;
@@ -67,6 +67,20 @@ svg.material-icons:not(:last-child) {
   align-items: center;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
+}
+
+.card.no-document {
+  height: 400px;
+  width: 700px;
+}
+
+.card.document {
+  height: 500px;
+  width: 1000px;
+}
+
+.frame-container.no-document {
+  padding-bottom: 65%;
 }
 
 .card-body {

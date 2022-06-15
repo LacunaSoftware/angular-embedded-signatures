@@ -37,9 +37,11 @@ export class SignerComponent implements OnInit {
 
   fileName = '';
 
-  isChecked: Boolean = false
-  disableForms: Boolean = false
-  disableAllForms: Boolean = false
+  isChecked: boolean = false
+  disableForms: boolean = false
+  disableAllForms: boolean = false
+
+  disableDocumentPreview: boolean = true
 
   receitaPlaceholder = new Receita("Fulano de tal");
 
@@ -60,9 +62,9 @@ export class SignerComponent implements OnInit {
         this.usuario.email = this.usuarioPlaceholder.email;
       }
       // DEBUG
-      console.log("Nome:", this.usuario.nome)
-      console.log("Email:", this.usuario.email)
-      console.log("CPF:", this.usuario.cpf)
+      // console.log("Nome:", this.usuario.nome)
+      // console.log("Email:", this.usuario.email)
+      // console.log("CPF:", this.usuario.cpf)
 
   }
 
@@ -86,10 +88,12 @@ export class SignerComponent implements OnInit {
   }
 
   sign(data: string) {
-    var widget = new LacunaSignerWidget();
+    // DEBUG
+    // console.log("Disable document preview:", this.disableDocumentPreview);
     this.disableAllForms = true;
-    if(data){
-
+    var widget = new LacunaSignerWidget();
+    widget.setDisableDocumentPreview(this.disableDocumentPreview);
+    if(data) {
       widget.render(data, 'embed-container')
     }
   }
@@ -103,8 +107,9 @@ export class SignerComponent implements OnInit {
       headers: headers,
       responseType: 'text'})
       .subscribe((response: { body: any; }) => {
-      console.log(response.body);
-      this.sign(response.body)
+        // DEBUG
+        // console.log(response.body);
+        this.sign(response.body)
     });
 
 

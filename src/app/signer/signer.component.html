@@ -35,8 +35,7 @@
           <div class="row justify-content-center mb-2 form-group">
             <label for="nome" hidden>Nome do usuário: </label>
             <input id="nome" class="form-control form-rounded"
-            placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})"
-            formControlName="nome" required>
+              placeholder="Nome de usuário: (ex: {{usuarioPlaceholder.nome}})" formControlName="nome" required>
             <div *ngIf="nome?.invalid && nome?.dirty">
               Preencha um nome válido antes de continuar
             </div>
@@ -44,8 +43,7 @@
           <div class="row justify-content-center mb-2">
             <label for="email-input" hidden>Email: </label>
             <input class="form-control form-rounded" id="email-input"
-            placeholder="E-mail (ex: {{usuarioPlaceholder.email}})"
-            formControlName="email" required minlength="3">
+              placeholder="E-mail (ex: {{usuarioPlaceholder.email}})" formControlName="email" required minlength="3">
             <div *ngIf="email?.invalid && email?.dirty">
               Preencha o campo de e-mail com um e-mail válido
             </div>
@@ -61,7 +59,8 @@
         </form>
         <div class="row">
           <div class="text-md-center mt-1 mb-2">
-            <button type="submit" class="form-control btn btn-primary btn-clr" [disabled]="!loginForm.valid && !isChecked" (click)="updateProfile()">Login</button>
+            <button type="submit" class="form-control btn btn-primary btn-clr"
+              [disabled]="!loginForm.valid && !isChecked" (click)="updateProfile()">Login</button>
           </div>
         </div>
 
@@ -76,8 +75,8 @@
           <div class="row justify-content-center mb-2">
             <label for="nome-paciente" hidden>Email: </label>
             <input class="form-control form-rounded" id="nome-paciente" name="nomePaciente"
-              formControlName="nomePaciente"
-              required placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})">
+              formControlName="nomePaciente" required
+              placeholder="Nome do paciente (ex: {{receitaPlaceholder.nomeDoPaciente}})">
             <div *ngIf="nomePaciente?.invalid && nomePaciente?.dirty">
               Nome de paciente é obrigatório, digite novamente
             </div>
@@ -94,9 +93,20 @@
               Selecione um medicamento e tente novamente
             </div>
           </div>
+          <hr />
+          <div class="row justify-content-center mb-2">
+            <div class="text-md-center">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="enableDocPreview"
+                  [(ngModel)]="disableDocumentPreview" [ngModelOptions]="{standalone: true}" novalidate />
+                <label class="form-check-label" for="enableDocPreview">Esconder documento em assinatura?</label>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="text-md-center mt-1 mb-2">
-              <button type="submit" class="form-control btn btn-primary btn-clr" [disabled]="prescricaoForm.invalid">COMEÇAR</button>
+              <button type="submit" class="form-control btn btn-primary btn-clr"
+                [disabled]="prescricaoForm.invalid">COMEÇAR</button>
             </div>
           </div>
         </form>
@@ -105,10 +115,11 @@
   </div>
 
 
-  <div class="row mx-auto" id="whiteboard" [hidden]="!disableAllForms">
-    <div class="card">
+  <div class="row" id="whiteboard" [hidden]="!disableAllForms">
+    <div class="card" [ngClass]="disableDocumentPreview ? 'no-document' : 'document'">
       <div class="card-body">
-        <div id="embed-container" class="frame-container"></div>
+        <div id="embed-container" class="frame-container"
+          [ngClass]="disableDocumentPreview ? 'no-document' : 'document'"></div>
       </div>
     </div>
   </div>
