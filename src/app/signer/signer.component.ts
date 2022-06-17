@@ -130,6 +130,10 @@ export class SignerComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
+  cpfMask() {
+    return '000.000.000-009';
+  }
+
   constructor(private _http: HttpClient,
     private route: ActivatedRoute,
     private router: Router) {
@@ -139,9 +143,10 @@ export class SignerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      console.log(params['name']);
-    });
+    // Debug
+    // this.route.queryParams.subscribe(params => {
+    //   console.log(params['name']);
+    // });
 
     this.loginForm = new FormGroup({
       nome: new FormControl(this.usuario.nome, [

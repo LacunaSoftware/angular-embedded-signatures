@@ -51,7 +51,8 @@
           <div class="row justify-content-center mb-2">
             <label for="cpf-input" hidden>CPF: </label>
             <input class="form-control form-rounded transparent-input" id="cpf-input" name="cpf"
-              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" required>
+              placeholder="CPF (ex: {{usuarioPlaceholder.cpf | cpf}})" formControlName="cpf" required
+              [mask]="cpfMask()" maxlength="14">
             <div *ngIf="cpf?.invalid && cpf?.dirty">
               O CPF é obrigatório, digite novamente
             </div>

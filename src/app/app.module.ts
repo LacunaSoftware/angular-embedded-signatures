@@ -8,6 +8,8 @@ import { CpfPipe } from './cpf.pipe';
 import { SignerComponent } from './signer/signer.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { NgxMaskModule } from 'ngx-mask';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -15,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    NgxMaskModule.forRoot()
   ],
   declarations: [
     AppComponent,

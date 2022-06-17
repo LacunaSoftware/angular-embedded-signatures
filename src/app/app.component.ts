@@ -21,8 +21,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      console.log(params['name']);
-    });
+    // DEBUG
+    // this.route.queryParams.subscribe(params => {
+    //   console.log(params['name']);
+    // });
   }
 }
