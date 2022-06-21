@@ -16,14 +16,4 @@ export class AppComponent {
     };
   }
 
-  refreshPage() {
-    this.router.navigateByUrl('');
-  }
-
-  ngOnInit(): void {
-    // DEBUG
-    // this.route.queryParams.subscribe(params => {
-    //   console.log(params['name']);
-    // });
-  }
 }

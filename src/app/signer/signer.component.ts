@@ -23,7 +23,7 @@ export class SignerComponent implements OnInit {
 
   sign(data: string) {
     // DEBUG
-    console.log("Disable document preview:", this.disableDocumentPreview);
+    // console.log("Disable document preview:", this.disableDocumentPreview);
     this.showSignature = true;
     var widget = new LacunaSignerWidget();
     widget.setDisableDocumentPreview(this.disableDocumentPreview);
@@ -53,14 +53,6 @@ export class SignerComponent implements OnInit {
 
   }
 
-  refreshPage(){
-    this.router.navigateByUrl('');
-  }
-
-  cpfMask() {
-    return '000.000.000-009';
-  }
-
   constructor(private _http: HttpClient,
     private route: ActivatedRoute,
     private router: Router) {
@@ -70,10 +62,6 @@ export class SignerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Debug
-    // this.route.queryParams.subscribe(params => {
-    //   console.log(params['name']);
-    // });
   }
 
 }

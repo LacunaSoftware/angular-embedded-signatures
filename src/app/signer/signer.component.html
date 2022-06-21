@@ -1,22 +1,12 @@
 <div class="content" role="main">
-  <h1>Assinatura embutida</h1>
+  <h1 [hidden]="showSignature">Signer embedded signature</h1>
   <div [hidden]="showSignature">
     <input class="form-check-input" type="checkbox" id="enableDocPreview"
     [(ngModel)]="disableDocumentPreview" [ngModelOptions]="{standalone: true}" novalidate />
-    <label class="form-check-label" for="enableDocPreview">Esconder documento em assinatura</label>
-
+    <label class="form-check-label" for="enableDocPreview">Hide document during signature</label>
     <hr/>
     <div class="row">
-      <button type="submit" class="" (click)="startSignature()">Assinar documento</button>
-    </div>
-  </div>
-
-  <div class="row" id="whiteboard" [hidden]="!showSignature || afterSigned">
-    <div class="card" [ngClass]="disableDocumentPreview ? 'no-document' : 'document'">
-      <div class="card-body">
-        <div id="embed-container" class="frame-container"
-          [ngClass]="disableDocumentPreview ? 'no-document' : 'document'"></div>
-      </div>
+      <button type="submit" class="" (click)="startSignature()">Start signature</button>
     </div>
   </div>
 
@@ -31,17 +21,16 @@
               </div>
             </div>
             <div class="col-auto">
-              <h4> Sua prescrição foi criada com sucesso!</h4>
+              <h4> Document signed successfully!</h4>
             </div>
             <div class="btn-group col-lg-8">
-              <button hidden class="btn btn-primary rounded m-2" placeholder="Começar" onclick="download()"
-                type="button">BAIXAR PRESCRIÇÃO</button>
-              <a class="btn btn-outline-primary rounded btn-custom-outline m-2" routerLink="/home" role="button" onclick="refreshPage()" >NOVA PRESCRIÇÃO</a>
+              <a class="btn btn-outline-primary rounded btn-custom-outline m-2" routerLink="/home" role="button" >Sign again</a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
+<div id="embed-container" class="frame-container" [ngClass]="disableDocumentPreview ? 'no-document': 'document' " [hidden]="!showSignature || afterSigned"></div>
+
