@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { CpfPipe } from './cpf.pipe';
 import { SignerComponent } from './signer/signer.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,8 +20,7 @@ import { NgxMaskModule } from 'ngx-mask';
   ],
   declarations: [
     AppComponent,
-    SignerComponent,
-    CpfPipe
+    SignerComponent
   ],
   exports: [],
   providers: [],
