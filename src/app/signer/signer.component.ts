@@ -21,36 +21,27 @@ export class SignerComponent implements OnInit {
   afterSigned: boolean = false
 
 
-  sign(data: string) {
-    // DEBUG
-    // console.log("Disable document preview:", this.disableDocumentPreview);
+  sign(embedUrl: string) {
+    if (!embedUrl) {
+      return;
+    }
     this.showSignature = true;
     var widget = new LacunaSignerWidget();
     widget.setDisableDocumentPreview(this.disableDocumentPreview);
-    if (data) {
-      widget.render(data, 'embed-container')
+      widget.render(embedUrl, 'embed-container')
       widget.on(widget.events.documentSigned, () => {
         this.afterSigned = true;
       });
-    }
   }
 
   startSignature() {
-    const headers: HttpHeaders = new HttpHeaders({
-      'x-api-key': 'demo-portal|bebe3de56c5c2c40a6022978a6706e55fb8b9817c577138e1200fae757cc7a64',
-    });
     this._http.post("https://localhost:5001/api/signer/embedded", null, {
       observe: 'response',
-      headers: headers,
       responseType: 'text'
     })
       .subscribe((response: { body: any; }) => {
-        // DEBUG
-        // console.log(response.body);
         this.sign(response.body)
       });
-
-
   }
 
   constructor(private _http: HttpClient,

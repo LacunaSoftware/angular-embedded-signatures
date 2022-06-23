@@ -7,16 +7,13 @@ import { AppComponent } from './app.component';
 import { SignerComponent } from './signer/signer.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { NgxMaskModule } from 'ngx-mask';
-
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    NgxMaskModule.forRoot()
+    AppRoutingModule
   ],
   declarations: [
     AppComponent,
