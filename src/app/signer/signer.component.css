@@ -16,6 +16,13 @@ h6 {
   align-items: center;
 }
 
+.main-content {
+  display: flex;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form-check-input {
   float: left;
   margin-left: -1.5em;

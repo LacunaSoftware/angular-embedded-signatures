@@ -41,6 +41,9 @@ export class SignerComponent implements OnInit {
     })
       .subscribe((response: { body: any; }) => {
         this.sign(response.body)
+      }, (error) => {
+        alert("Error, could not send request to server, try again later\n"+
+        "Message: "+ error.message);
       });
   }
 
